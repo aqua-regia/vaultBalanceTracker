@@ -1,0 +1,28 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+
+dataSources:
+  - kind: ethereum
+    name: VaultToken
+    network: mainnet  # change this to bnb or other based on which chain your contract is present
+    source:
+      address: "0xA17581A9E3356d9A858b789D68B4d866e593aE94"  # Replace with desired vault token address
+      abi: VaultToken
+      startBlock: 20200000  # Replace with the block number where the contract was deployed
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - SupplyCollateral
+        - WithdrawCollateral
+      abis:
+        - name: VaultToken
+          file: ./abis/token.json  # This should match your actual vault contract ABI file
+      eventHandlers:
+        - event:  AssetStaked(indexed address,indexed address,uint256,indexed string) # change to deposit event name from abis/token.json
+          handler: stake
+        - event: AssetUnstaked(indexed address,indexed address,uint256,indexed string) # change to withdraw event name from abis/tokens.json
+          handler: unstake
+      file: ./src/index.ts

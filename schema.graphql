@@ -1,0 +1,9 @@
+type Bundle @entity {
+    id: ID!
+}
+
+type UserBalance @entity {
+    id: Bytes! # User's Ethereum address
+    balance: BigInt! # Current balance of the user in the asset
+    updatedAt: BigInt! # Timestamp of the last update
+}
