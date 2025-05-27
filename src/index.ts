@@ -35,11 +35,17 @@ function updateUserBalance(userAddress: Address, amount: BigInt, block: ethereum
 export function stake(stakeEvent: AssetStaked): void {
 	const userAddress = stakeEvent.params.staker;
 	const amount = stakeEvent.params.amount;
-	updateUserBalance(userAddress, amount, stakeEvent.block, true);
+	const asset = stakeEvent.params.asset;
+	if (asset.toHexString().toLowerCase() == "0x388C818CA8B9251b393131C08a736A67ccB19297".toLowerCase()) {	// change this to track the asset you want
+		updateUserBalance(userAddress, amount, stakeEvent.block, true);
+	}
 }
 
 export function unstake(unstakeEvent: AssetUnstaked): void {
 	const userAddress = unstakeEvent.params.staker;
 	const amount = unstakeEvent.params.amount;
-	updateUserBalance(userAddress, amount, unstakeEvent.block, false);
+	const asset = unstakeEvent.params.asset;
+	if (asset.toHexString().toLowerCase() == "0x388C818CA8B9251b393131C08a736A67ccB19297".toLowerCase()) {	// change this to track the asset you want
+		updateUserBalance(userAddress, amount, unstakeEvent.block, false);
+	}
 }
